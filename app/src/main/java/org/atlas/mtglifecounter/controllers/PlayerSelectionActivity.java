@@ -1,9 +1,9 @@
 package org.atlas.mtglifecounter.controllers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -14,22 +14,24 @@ import java.util.List;
 
 public class PlayerSelectionActivity extends AppCompatActivity {
 
+    public static int players_selected = 1;
     private List<ImageView> player_list = new ArrayList<>();
-    private int players_selected = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_selection);
 
-        setPlayer_list();
+        loadPlayerList();
     }
 
     public void pressed_continue(View view) {
-
+        Log.i("PlayerSelection", "Players selected: " + players_selected);
+        Intent animation = new Intent(this, SetupGameActivity.class);
+        startActivity(animation);
     }
 
-    private void setPlayer_list() {
+    private void loadPlayerList() {
         // Adds the players icons to the list
         player_list.add((ImageView) findViewById(R.id.p1));
         player_list.add((ImageView) findViewById(R.id.p2));
@@ -46,14 +48,14 @@ public class PlayerSelectionActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     players_selected = player_list.indexOf(player) + 1;;
-                    setPlayersAlpha(players_selected);
+                    setPlayersAlphaOnClick(players_selected);
                 }
             });
         }
         player_list.get(0).setAlpha(255);
     }
 
-    private void setPlayersAlpha(int k) {
+    private void setPlayersAlphaOnClick(int k) {
         int i;
         for (i = 0; i < k; i++) {
             player_list.get(i).setAlpha(255);
