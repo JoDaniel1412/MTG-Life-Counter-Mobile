@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MTG Life Counter</string>
+    <string name="app_tittle">MTG Life Counter</string>
+    <string name="main_button_start">Start Game</string>
+    <string name="player_selection_button_continue">Continue</string>
+    <string name="player_selection_set_players">Set Players</string>
+    <string name="player_selection_p6">P6</string>
+    <string name="player_selection_p5">P5</string>
+    <string name="player_selection_p4">P4</string>
+    <string name="player_selection_p3">P3</string>
+    <string name="player_selection_p2">P2</string>
+    <string name="player_selection_p1">P1</string>
+</resources>
