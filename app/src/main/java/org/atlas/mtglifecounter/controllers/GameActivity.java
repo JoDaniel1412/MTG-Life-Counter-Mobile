@@ -1,38 +1,66 @@
 package org.atlas.mtglifecounter.controllers;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import org.atlas.mtglifecounter.R;
+import org.atlas.mtglifecounter.graphics.LifeCounter;
 import org.atlas.mtglifecounter.util.Math;
 
 public class GameActivity extends AppCompatActivity {
 
     private FrameLayout game_layout;
+    private boolean game_layout_loaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
         game_layout = findViewById(R.id.game_layout);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (!game_layout_loaded && event.getAction() == MotionEvent.ACTION_UP) {
+            game_layout_loaded = true;
+            loadGrid();
+        }
+        return super.onTouchEvent(event);
+    }
+
     private void loadGrid() {
-        int life = SetupGameActivity.starting_life;
+        int starting_life = SetupGameActivity.starting_life;
+        int players_selected = PlayerSelectionActivity.players_selected;
         boolean commander = SetupGameActivity.commander_active;
 
-        int columns = (int) java.lang.Math.sqrt(PlayerSelectionActivity.players_selected);
-        int rows = Math.divideApproach(PlayerSelectionActivity.players_selected, columns);
-        int xOffset = game_layout.getWidth() / columns;
-        int yOffset = game_layout.getHeight() / rows;
+        int[] colors = new int[] {Color.CYAN, Color.RED, Color.BLUE, Color.MAGENTA, Color.YELLOW, Color.GREEN};
+        int color = 0;
+
+        int columns = (int) java.lang.Math.sqrt(players_selected);
+        int rows = Math.ceilingDivision(players_selected, columns);
+        int width = game_layout.getWidth();
+        int height = game_layout.getHeight();
+        int xOffset = width / columns;
+        int yOffset = height / rows;
         int x = 0;
         int y = 0;
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 //createLifeBox(x, y, life, commander)
+                LifeCounter lifeCounter = new LifeCounter(this);
+                lifeCounter.setBackgroundColor(colors[color]);
+                lifeCounter.setX(x);
+                lifeCounter.setY(y);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(xOffset, yOffset);
+                lifeCounter.setLayoutParams(params);
+                game_layout.addView(lifeCounter);
+
+                color += 1;
                 x += xOffset;
             }
             x = 0;

@@ -13,4 +13,5 @@
     <string name="setup_game_starting_life">Starting Life</string>
     <string name="setup_game_commander">Commander</string>
     <string name="setup_game_play">Play</string>
+    <string name="game_touch_to_start">Touch to Start</string>
 </resources>

@@ -74,7 +74,7 @@ public class Math {
      * @param num2 divisor
      * @return result of the operation
      */
-    public static int divideApproach(int num1, int num2) {
+    public static int ceilingDivision(int num1, int num2) {
         double result = num1 / num2;
         if (result * 10 % 10 >= 5) {
             result += 1;
