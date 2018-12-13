@@ -46,23 +46,23 @@ public class GameActivity extends AppCompatActivity {
         int x = 0;
         int y = 0;
 
-        int p = 1;
+        int p = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                //if (p == 5) xOffset *= 2;
-                //if (xOffset > width) xOffset /= 2;
                 int color = Math.getRandomNumberInRange(0, colors.length - 1);
 
                 // Sets the Life Counter Views
                 LifeCounter lifeCounter = new LifeCounter(this);
-                lifeCounter.setBackgroundColor(colors[color]);
                 lifeCounter.setX(x);
                 lifeCounter.setY(y);
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(xOffset, yOffset);
                 lifeCounter.setLayoutParams(params);
+                if (Players.colors.size() <= p) {
+                    Players.colors.add(p, colors[color]);
+                }
+                lifeCounter.setBackgroundColor(Players.colors.get(p));
 
                 // Load the Life Counter
-                Players.getPlayers_life().add(lifeCounter);
                 game_layout.addView(lifeCounter);
 
                 x += xOffset;

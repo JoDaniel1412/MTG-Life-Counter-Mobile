@@ -102,4 +102,19 @@ public class LifeCounter extends View {
         canvas.drawBitmap(bitmap, x, y , null);
     }
 
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 }
