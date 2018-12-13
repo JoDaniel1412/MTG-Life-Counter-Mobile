@@ -2,18 +2,24 @@ package org.atlas.mtglifecounter.graphics;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.atlas.mtglifecounter.R;
 import org.atlas.mtglifecounter.controllers.SetupGameActivity;
 
 public class LifeCounter extends View {
 
     private int life = SetupGameActivity.starting_life;
     private Canvas canvas;
+    private Color color;
+    private Sprite settingsSprite;
 
     // Paints
     Paint textPaint = new Paint();
@@ -27,10 +33,13 @@ public class LifeCounter extends View {
         super.onDraw(canvas);
         this.canvas = canvas;
 
-        reload();
+        init();
 
-        // Set the life
+        // Sets the life
         loadLifeText();
+
+        // Sets the buttons
+        loadButtons();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -38,29 +47,42 @@ public class LifeCounter extends View {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                pressed(event.getY());
+                if (!pressedSettings(event.getX(), event.getY())) {
+                    pressedLifeCounter(event.getY());
+                }
                 break;
 
             case MotionEvent.ACTION_UP:
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                pressed(event.getY());
+                pressedLifeCounter(event.getY());
                 break;
         }
         this.invalidate();
         return true;
     }
 
-    private void pressed(float y) {
+    private void init() {
+        textPaint.setTextSize(this.getWidth() / 3);
+        textPaint.setColor(ContextCompat.getColor(this.getContext(), R.color.colorWhiteText));
+    }
+
+    private void pressedLifeCounter(float y) {
         float hh = canvas.getHeight() / 2;
         if (y < hh) life++;
         if (y >= hh) life--;
     }
 
-    private void reload() {
-        textPaint.setTextSize(120);
-        textPaint.setColor(Color.WHITE);
+    private boolean pressedSettings(float x, float y) {
+        boolean pressed = false;
+        if (x > settingsSprite.getX() && x < settingsSprite.getX() + settingsSprite.getWidth()) {
+            if (y > settingsSprite.getY() && y < settingsSprite.getY() + settingsSprite.getHeight()) {
+                pressed = true;
+            }
+        }
+
+        return pressed;
     }
 
     private void loadLifeText() {
@@ -68,6 +90,16 @@ public class LifeCounter extends View {
         float x = canvas.getWidth() / 2 - offset;
         float y = canvas.getHeight() / 2 + offset / 2;
         canvas.drawText(String.valueOf(life), x, y, textPaint);
-
     }
+
+    private void loadButtons() {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.settings);
+        bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
+        int y = this.getHeight() / 16;
+        int x = this.getWidth() - bitmap.getWidth() - y;
+
+        settingsSprite = new Sprite(x, y, bitmap.getWidth(), bitmap.getHeight(), bitmap);
+        canvas.drawBitmap(bitmap, x, y , null);
+    }
+
 }
