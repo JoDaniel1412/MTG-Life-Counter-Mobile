@@ -1,9 +1,11 @@
 package org.atlas.mtglifecounter.graphics;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.MotionEvent;
 import android.view.View;
 
 import org.atlas.mtglifecounter.controllers.SetupGameActivity;
@@ -20,11 +22,6 @@ public class LifeCounter extends View {
         super(context);
     }
 
-    private void reload() {
-        textPaint.setTextSize(120);
-        textPaint.setColor(Color.WHITE);
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -34,6 +31,36 @@ public class LifeCounter extends View {
 
         // Set the life
         loadLifeText();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                pressed(event.getY());
+                break;
+
+            case MotionEvent.ACTION_UP:
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                pressed(event.getY());
+                break;
+        }
+        this.invalidate();
+        return true;
+    }
+
+    private void pressed(float y) {
+        float hh = canvas.getHeight() / 2;
+        if (y < hh) life++;
+        if (y >= hh) life--;
+    }
+
+    private void reload() {
+        textPaint.setTextSize(120);
+        textPaint.setColor(Color.WHITE);
     }
 
     private void loadLifeText() {

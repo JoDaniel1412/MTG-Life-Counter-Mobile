@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 
 import org.atlas.mtglifecounter.R;
 import org.atlas.mtglifecounter.graphics.LifeCounter;
+import org.atlas.mtglifecounter.logic.Players;
 import org.atlas.mtglifecounter.util.Math;
 
 public class GameActivity extends AppCompatActivity {
@@ -59,13 +60,16 @@ public class GameActivity extends AppCompatActivity {
                 //if (p == 5) xOffset *= 2;
                 //if (xOffset > width) xOffset /= 2;
 
-                // Loads the Life Counter Views
+                // Sets the Life Counter Views
                 LifeCounter lifeCounter = new LifeCounter(this);
                 lifeCounter.setBackgroundColor(colors[color]);
                 lifeCounter.setX(x);
                 lifeCounter.setY(y);
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(xOffset, yOffset);
                 lifeCounter.setLayoutParams(params);
+
+                // Load the Life Counter
+                Players.getPlayers_life().add(lifeCounter);
                 game_layout.addView(lifeCounter);
 
                 color += 1;
