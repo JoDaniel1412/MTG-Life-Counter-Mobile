@@ -1,16 +1,13 @@
 package org.atlas.mtglifecounter.controllers;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import org.atlas.mtglifecounter.R;
+import org.atlas.mtglifecounter.graphics.Colors;
 import org.atlas.mtglifecounter.graphics.LifeCounter;
 import org.atlas.mtglifecounter.logic.Players;
 import org.atlas.mtglifecounter.util.Math;
@@ -19,7 +16,7 @@ public class GameActivity extends AppCompatActivity {
 
     private FrameLayout game_layout;
     private boolean game_layout_loaded = false;
-    private int[] colors;
+    private int[] colors = Colors.colors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +36,6 @@ public class GameActivity extends AppCompatActivity {
 
     private void loadGrid() {
         int players_selected = PlayerSelectionActivity.players_selected;
-        colors = loadColors();
 
         int columns = (int) java.lang.Math.sqrt(players_selected);
         int rows = Math.ceilingDivision(players_selected, columns);
@@ -69,29 +65,11 @@ public class GameActivity extends AppCompatActivity {
                 Players.getPlayers_life().add(lifeCounter);
                 game_layout.addView(lifeCounter);
 
-                color += 1;
                 x += xOffset;
                 p++;
             }
             x = 0;
             y += yOffset;
         }
-    }
-
-    @SuppressLint("ResourceType")
-    private int[] loadColors() {
-        return new int[]{
-                ContextCompat.getColor(this, R.color.colorMaximumBlueGreen),
-                ContextCompat.getColor(this, R.color.colorRoseMadder),
-                ContextCompat.getColor(this, R.color.colorBrightYellow),
-                ContextCompat.getColor(this, R.color.colorIndigo),
-                ContextCompat.getColor(this, R.color.colorMaastrichtBlue),
-                ContextCompat.getColor(this, R.color.colorMaximumRed),
-                ContextCompat.getColor(this, R.color.colorPaleAqua),
-                ContextCompat.getColor(this, R.color.colorDarkPurple),
-                ContextCompat.getColor(this, R.color.colorHeidelbergRed),
-                ContextCompat.getColor(this, R.color.colorCharlestonGreen),
-                ContextCompat.getColor(this, R.color.colorAsparagus),
-        };
     }
 }
