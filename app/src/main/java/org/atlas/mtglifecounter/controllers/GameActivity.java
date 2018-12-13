@@ -1,8 +1,10 @@
 package org.atlas.mtglifecounter.controllers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -34,6 +36,11 @@ public class GameActivity extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
+    public void pressedColorSettings(View view) {
+        Intent animation = new Intent(this, ColorSettingsActivity.class);
+        startActivity(animation);
+    }
+
     private void loadGrid() {
         int players_selected = PlayerSelectionActivity.players_selected;
 
@@ -55,6 +62,7 @@ public class GameActivity extends AppCompatActivity {
                 LifeCounter lifeCounter = new LifeCounter(this);
                 lifeCounter.setX(x);
                 lifeCounter.setY(y);
+                lifeCounter.setPlayer(p);
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(xOffset, yOffset);
                 lifeCounter.setLayoutParams(params);
                 if (Players.colors.size() <= p) {

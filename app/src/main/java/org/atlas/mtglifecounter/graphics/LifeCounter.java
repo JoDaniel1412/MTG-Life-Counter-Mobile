@@ -12,20 +12,24 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import org.atlas.mtglifecounter.R;
+import org.atlas.mtglifecounter.controllers.GameActivity;
 import org.atlas.mtglifecounter.controllers.SetupGameActivity;
 
 public class LifeCounter extends View {
 
+    private GameActivity parent;
     private int life = SetupGameActivity.starting_life;
     private Canvas canvas;
     private Color color;
     private Sprite settingsSprite;
+    private int player;
 
     // Paints
     Paint textPaint = new Paint();
 
     public LifeCounter(Context context) {
         super(context);
+        parent = (GameActivity) context;
     }
 
     @Override
@@ -79,6 +83,7 @@ public class LifeCounter extends View {
         if (x > settingsSprite.getX() && x < settingsSprite.getX() + settingsSprite.getWidth()) {
             if (y > settingsSprite.getY() && y < settingsSprite.getY() + settingsSprite.getHeight()) {
                 pressed = true;
+                parent.pressedColorSettings(this);
             }
         }
 
@@ -116,5 +121,9 @@ public class LifeCounter extends View {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public void setPlayer(int player) {
+        this.player = player;
     }
 }

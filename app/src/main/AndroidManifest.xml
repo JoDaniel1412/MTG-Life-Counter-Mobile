@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".controllers.PlayerSelectionActivity" />
         <activity android:name=".controllers.SetupGameActivity" />
-        <activity android:name=".controllers.GameActivity"></activity>
+        <activity android:name=".controllers.GameActivity" />
+        <activity android:name=".controllers.ColorSettingsActivity"></activity>
     </application>
 
 </manifest>

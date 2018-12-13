@@ -76,7 +76,7 @@ public class Math {
      */
     public static int ceilingDivision(float num1, float num2) {
         float result = num1 / num2;
-        if (result * 10 % 10 >= 5) {
+        if (result * 10 % 10 > 0) {
             result += 1;
         }
         return (int) result;
