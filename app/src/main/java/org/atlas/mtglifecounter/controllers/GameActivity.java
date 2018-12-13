@@ -24,6 +24,12 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        loadGrid();
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (!game_layout_loaded && event.getAction() == MotionEvent.ACTION_UP) {
             game_layout_loaded = true;
@@ -33,9 +39,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void loadGrid() {
-        int starting_life = SetupGameActivity.starting_life;
         int players_selected = PlayerSelectionActivity.players_selected;
-        boolean commander = SetupGameActivity.commander_active;
 
         int[] colors = new int[] {Color.CYAN, Color.RED, Color.BLUE, Color.MAGENTA, Color.YELLOW, Color.GREEN};
         int color = 0;
@@ -49,9 +53,13 @@ public class GameActivity extends AppCompatActivity {
         int x = 0;
         int y = 0;
 
+        int p = 1;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                //createLifeBox(x, y, life, commander)
+                //if (p == 5) xOffset *= 2;
+                //if (xOffset > width) xOffset /= 2;
+
+                // Loads the Life Counter Views
                 LifeCounter lifeCounter = new LifeCounter(this);
                 lifeCounter.setBackgroundColor(colors[color]);
                 lifeCounter.setX(x);
@@ -62,6 +70,7 @@ public class GameActivity extends AppCompatActivity {
 
                 color += 1;
                 x += xOffset;
+                p++;
             }
             x = 0;
             y += yOffset;
