@@ -16,6 +16,7 @@ import org.atlas.mtglifecounter.util.Math;
 
 public class GameActivity extends AppCompatActivity {
 
+    public static int currentPlayerSettings;
     private FrameLayout game_layout;
     private boolean game_layout_loaded = false;
     private int[] colors = Colors.colors;
@@ -36,7 +37,8 @@ public class GameActivity extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
-    public void pressedColorSettings(View view) {
+    public void pressedColorSettings(View view, int player) {
+        GameActivity.currentPlayerSettings = player;
         Intent animation = new Intent(this, ColorSettingsActivity.class);
         startActivity(animation);
     }

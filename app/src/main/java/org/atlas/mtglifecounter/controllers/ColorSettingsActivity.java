@@ -1,16 +1,21 @@
 package org.atlas.mtglifecounter.controllers;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.constraint.solver.widgets.Rectangle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import org.atlas.mtglifecounter.R;
+import org.atlas.mtglifecounter.graphics.ColorSelector;
 import org.atlas.mtglifecounter.graphics.Colors;
 import org.atlas.mtglifecounter.graphics.LifeCounter;
 import org.atlas.mtglifecounter.logic.Players;
@@ -37,16 +42,17 @@ public class ColorSettingsActivity extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void loadColors() {
         int colors_size = Colors.colors.length;
         int columns = (int) java.lang.Math.sqrt(colors_size);
         int rows = Math.ceilingDivision(colors_size, columns);
-        int width = 400;
-        int height = 400;
+        int width = layout.getWidth();
+        int height = layout.getHeight();
         int xOffset = width / columns;
         int yOffset = height / rows;
-        int x = 0;
-        int y = 0;
+        int x = xOffset / 4;
+        int y = yOffset / 4;
 
         int color = 0;
         for (int i = 0; i < rows; i++) {
@@ -54,20 +60,30 @@ public class ColorSettingsActivity extends AppCompatActivity {
                 if (color >= colors_size) return;
 
                 // Sets the Rectangle in the Canvas
-                Paint paint = new Paint();
-                paint.setColor(Colors.colors[color]);
-                Rect rect = new Rect();
-                rect.set(x, y, xOffset, yOffset);
-                Canvas canvas = new Canvas();
-                canvas.drawRect(rect, paint);
+                ColorSelector rect = new ColorSelector(this);
+                rect.setX(x);
+                rect.setY(y);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(xOffset/2, yOffset/2);
+                rect.setLayoutParams(params);
+                rect.setBackgroundColor(Colors.colors[color]);
+                rect.setColor(Colors.colors[color]);
+                rect.setOnTouchListener(this::colorSelected);
 
-                // Loads the Canvas
-                layout.draw(canvas);
+                // Load the Rect
+                layout.addView(rect);
                 x += xOffset;
                 color++;
             }
-            x = 0;
+            x = xOffset / 4;
             y += yOffset;
         }
+    }
+
+    private boolean colorSelected(View v, MotionEvent event) {
+        ColorSelector rect = (ColorSelector) v;
+        Players.colors.set(GameActivity.currentPlayerSettings, rect.getColor());
+        Intent animation = new Intent(this, GameActivity.class);
+        startActivity(animation);
+        return true;
     }
 }

@@ -83,7 +83,7 @@ public class LifeCounter extends View {
         if (x > settingsSprite.getX() && x < settingsSprite.getX() + settingsSprite.getWidth()) {
             if (y > settingsSprite.getY() && y < settingsSprite.getY() + settingsSprite.getHeight()) {
                 pressed = true;
-                parent.pressedColorSettings(this);
+                parent.pressedColorSettings(this, player);
             }
         }
 
