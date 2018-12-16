@@ -14,5 +14,5 @@
     <string name="setup_game_commander">Commander</string>
     <string name="setup_game_play">Play</string>
     <string name="game_touch_to_start">Touch to Start</string>
-    <string name="setup_game_poison">Poison</string>
+    <string name="setup_game_vanguard">Vanguard</string>
 </resources>

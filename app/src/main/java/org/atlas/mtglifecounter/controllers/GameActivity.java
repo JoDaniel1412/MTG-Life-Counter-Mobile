@@ -1,12 +1,9 @@
 package org.atlas.mtglifecounter.controllers;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,14 +11,15 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import org.atlas.mtglifecounter.R;
+import org.atlas.mtglifecounter.game.Game;
+import org.atlas.mtglifecounter.game.Player;
 import org.atlas.mtglifecounter.graphics.Colors;
 import org.atlas.mtglifecounter.graphics.LifeCounter;
-import org.atlas.mtglifecounter.logic.Players;
 import org.atlas.mtglifecounter.util.Math;
 
 public class GameActivity extends AppCompatActivity {
 
-    public static int currentPlayerSettings;
+    private Game game = Game.getInstance();
     private FrameLayout game_layout;
     private int[] colors = Colors.colors;
 
@@ -36,15 +34,9 @@ public class GameActivity extends AppCompatActivity {
         loadGrid();
     }
 
-    public void pressedColorSettings(View view, int player) {
-        GameActivity.currentPlayerSettings = player;
-        Intent animation = new Intent(this, ColorSettingsActivity.class);
-        startActivity(animation);
-    }
-
     private void loadGrid() {
         Display display = getWindowManager(). getDefaultDisplay();
-        int players_selected = PlayerSelectionActivity.players_selected;
+        int players_selected = game.getPlayers().size();
 
         int columns = (int) java.lang.Math.sqrt(players_selected);
         int rows = Math.ceilingDivision(players_selected, columns);
@@ -59,18 +51,17 @@ public class GameActivity extends AppCompatActivity {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 int color = Math.getRandomNumberInRange(0, colors.length - 1);
+                Player player = game.getPlayers().get(p);
 
                 // Sets the Life Counter Views
                 LifeCounter lifeCounter = new LifeCounter(this);
                 lifeCounter.setX(x);
                 lifeCounter.setY(y);
-                lifeCounter.setPlayer(p);
+                lifeCounter.setPlayer(player);
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(xOffset, yOffset);
                 lifeCounter.setLayoutParams(params);
-                if (Players.colors.size() <= p) {
-                    Players.colors.add(p, colors[color]);
-                }
-                lifeCounter.setBackgroundColor(Players.colors.get(p));
+                lifeCounter.setColor(Colors.colors[p]);
+                lifeCounter.setBackgroundColor(Colors.colors[p]);
 
                 // Load the Life Counter
                 game_layout.addView(lifeCounter);

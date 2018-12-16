@@ -11,12 +11,15 @@ import android.widget.EditText;
 import android.widget.Switch;
 
 import org.atlas.mtglifecounter.R;
+import org.atlas.mtglifecounter.game.Game;
+import org.atlas.mtglifecounter.game.Player;
+
+import java.util.List;
 
 public class SetupGameActivity extends AppCompatActivity {
 
-    public static boolean commander_active;
-    public static int starting_life;
     private Switch commander_switch;
+    private Switch vanguard_switch;
     private EditText starting_life_entry;
 
     @Override
@@ -27,15 +30,25 @@ public class SetupGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setup_game);
 
         commander_switch = findViewById(R.id.commander_switch);
+        vanguard_switch = findViewById(R.id.vanguard_switch);
         starting_life_entry = findViewById(R.id.starting_life_entry);
     }
 
     public void pressed_play(View view) {
-        commander_active = commander_switch.isChecked();
-        starting_life = Integer.parseInt(starting_life_entry.getText().toString());
+        Game game = Game.getInstance();
+        game.setCommander(commander_switch.isChecked());
+        game.setVanguard(vanguard_switch.isChecked());
+        game.setStartingLife(Integer.parseInt(starting_life_entry.getText().toString()));
 
-        Log.i("SetupGameAttributes", "Starting Life: " + starting_life);
-        Log.i("SetupGameAttributes", "Commander enable: " + commander_active);
+        Log.i("SetupGameAttributes", "Starting Life: " + game.getStartingLife());
+        Log.i("SetupGameAttributes", "Commander enable: " + game.isCommander());
+        Log.i("SetupGameAttributes", "Vanguard enable: " + game.isVanguard());
+
+        // Sets the life for each Player
+        List<Player> players = game.getPlayers();
+        for (Player player : players) {
+            player.setLife(game.getStartingLife());
+        }
 
         Intent animation = new Intent(this, GameActivity.class);
         startActivity(animation);
