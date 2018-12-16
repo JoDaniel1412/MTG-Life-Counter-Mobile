@@ -10,6 +10,8 @@ import java.util.List;
 public class Players {
 
     public static List<LifeCounter> life = new ArrayList<>();
+    public static List<Integer> poison = new ArrayList<>();
+    public static List<List<Integer>> commander = new ArrayList<>();
     public static List<Integer> colors = new ArrayList<>();
 
 }

@@ -9,8 +9,11 @@ import android.graphics.Rect;
 import android.support.constraint.solver.widgets.Rectangle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -28,27 +31,22 @@ public class ColorSettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_color_settings);
 
         layout = findViewById(R.id.colors_pane);
         loadColors();
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            loadColors();
-        }
-        return super.onTouchEvent(event);
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     private void loadColors() {
+        Display display = getWindowManager(). getDefaultDisplay();
         int colors_size = Colors.colors.length;
         int columns = (int) java.lang.Math.sqrt(colors_size);
         int rows = Math.ceilingDivision(colors_size, columns);
-        int width = layout.getWidth();
-        int height = layout.getHeight();
+        int width = display.getWidth();
+        int height = display.getHeight();
         int xOffset = width / columns;
         int yOffset = height / rows;
         int x = xOffset / 4;

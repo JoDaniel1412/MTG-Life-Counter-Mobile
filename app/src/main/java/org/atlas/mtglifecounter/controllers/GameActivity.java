@@ -1,10 +1,15 @@
 package org.atlas.mtglifecounter.controllers;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -18,23 +23,17 @@ public class GameActivity extends AppCompatActivity {
 
     public static int currentPlayerSettings;
     private FrameLayout game_layout;
-    private boolean game_layout_loaded = false;
     private int[] colors = Colors.colors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
-        game_layout = findViewById(R.id.game_layout);
-    }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (!game_layout_loaded && event.getAction() == MotionEvent.ACTION_UP) {
-            game_layout_loaded = true;
-            loadGrid();
-        }
-        return super.onTouchEvent(event);
+        game_layout = findViewById(R.id.game_layout);
+        loadGrid();
     }
 
     public void pressedColorSettings(View view, int player) {
@@ -44,12 +43,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void loadGrid() {
+        Display display = getWindowManager(). getDefaultDisplay();
         int players_selected = PlayerSelectionActivity.players_selected;
 
         int columns = (int) java.lang.Math.sqrt(players_selected);
         int rows = Math.ceilingDivision(players_selected, columns);
-        int width = game_layout.getWidth();
-        int height = game_layout.getHeight();
+        int width = display.getWidth();
+        int height = display.getHeight();
         int xOffset = width / columns;
         int yOffset = height / rows;
         int x = 0;
