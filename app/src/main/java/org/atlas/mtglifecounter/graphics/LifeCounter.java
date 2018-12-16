@@ -14,8 +14,6 @@ import org.atlas.mtglifecounter.R;
 import org.atlas.mtglifecounter.game.Game;
 import org.atlas.mtglifecounter.game.Player;
 
-import java.util.Objects;
-
 public class LifeCounter extends View {
 
     // Sprites
@@ -31,7 +29,6 @@ public class LifeCounter extends View {
     private Player player;
     private int color;
     private Canvas canvas;
-    private boolean loaded;
 
     // Paints
     Paint textPaint = new Paint();
@@ -48,13 +45,9 @@ public class LifeCounter extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-        if (!loaded) {
-            loaded = true;
-            this.canvas = canvas;
-            loadSprites();
-            loadColors();
-        }
+        this.canvas = canvas;
+        loadSprites();
+        loadColors();
         updateLifeText();
     }
 
@@ -68,14 +61,16 @@ public class LifeCounter extends View {
 
                 if (pressedSprite(x, y, settingsSprite)) {
                     pressedSettings();
-                } else if (pressedSprite(x, y, poisonSprite) || pressedSprite(x, y, lifeSprite)) {
-                    pressedCurrentCounter();
-                } else if (pressedSprite(x, y, Objects.requireNonNull(commanderSprite))) {
+                } else if (pressedSprite(x, y, poisonSprite)) {
+                    pressedPoison();
+                } else if (pressedSprite(x, y, lifeSprite)) {
+                    pressedLife();
+                } else if (game.isCommander() && pressedSprite(x, y, commanderSprite)) {
                     pressedCommander();
-                } else if (pressedSprite(x, y, Objects.requireNonNull(vanguardSprite))) {
+                } else if (game.isVanguard() && pressedSprite(x, y, vanguardSprite)) {
                     pressedVanguard();
                 } else {
-                    pressedLifeCounter(event.getY());
+                    pressedLifeCounter(y);
                 }
                 break;
 
@@ -115,12 +110,15 @@ public class LifeCounter extends View {
     private void pressedVanguard() {
     }
 
-    private void pressedCurrentCounter() {
+    private void pressedPoison() {
+    }
+
+    private void pressedLife() {
+
     }
 
     private void pressedSettings() {
     }
-
 
     private void updateLifeText() {
         float offset = textPaint.getTextSize() / 2;
@@ -138,7 +136,7 @@ public class LifeCounter extends View {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.settings);
         bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
         int y = this.getHeight() / 16;
-        int x = this.getWidth() - bitmap.getWidth() - y;
+        int x = this.getWidth() - bitmap.getWidth() - this.getWidth() / 16;
 
         settingsSprite = new Sprite(x, y, bitmap.getWidth(), bitmap.getHeight(), bitmap);
         canvas.drawBitmap(bitmap, x, y, null);
@@ -163,7 +161,7 @@ public class LifeCounter extends View {
 
         // Loads the Commander Sprite
         if (game.isCommander()) {
-            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.comander17);
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.commander17);
             bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
             x = this.getWidth() / 16;
             y = this.getHeight() - bitmap.getHeight() - x;
@@ -176,7 +174,7 @@ public class LifeCounter extends View {
         if (game.isVanguard()) {
             bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.commander);
             bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
-            int z = this.getHeight() / 16;
+            int z = this.getWidth() / 16;
             y = this.getHeight() - bitmap.getHeight() - z;
             x = this.getWidth() - bitmap.getWidth() - z;
 
@@ -185,7 +183,9 @@ public class LifeCounter extends View {
         }
     }
 
-    /** Getters and Setters **/
+    /**
+     * Getters and Setters
+     **/
 
     public Sprite getCommanderSprite() {
         return commanderSprite;
