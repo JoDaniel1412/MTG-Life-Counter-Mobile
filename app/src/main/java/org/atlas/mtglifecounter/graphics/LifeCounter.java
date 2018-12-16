@@ -11,18 +11,23 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import org.atlas.mtglifecounter.R;
+import org.atlas.mtglifecounter.game.Game;
 import org.atlas.mtglifecounter.game.Player;
+
+import java.util.Objects;
 
 public class LifeCounter extends View {
 
     // Sprites
     private Sprite commanderSprite;
+    private Sprite vanguardSprite;
     private Sprite settingsSprite;
     private Sprite poisonSprite;
     private Sprite lifeSprite;
     private Sprite currentCounterSprite = lifeSprite;
 
     // Attrs
+    private Game game = Game.getInstance();
     private Player player;
     private int color;
     private Canvas canvas;
@@ -65,8 +70,10 @@ public class LifeCounter extends View {
                     pressedSettings();
                 } else if (pressedSprite(x, y, poisonSprite) || pressedSprite(x, y, lifeSprite)) {
                     pressedCurrentCounter();
-                } else if (pressedSprite(x, y, commanderSprite)) {
+                } else if (pressedSprite(x, y, Objects.requireNonNull(commanderSprite))) {
                     pressedCommander();
+                } else if (pressedSprite(x, y, Objects.requireNonNull(vanguardSprite))) {
+                    pressedVanguard();
                 } else {
                     pressedLifeCounter(event.getY());
                 }
@@ -105,6 +112,9 @@ public class LifeCounter extends View {
     private void pressedCommander() {
     }
 
+    private void pressedVanguard() {
+    }
+
     private void pressedCurrentCounter() {
     }
 
@@ -121,18 +131,58 @@ public class LifeCounter extends View {
     }
 
     private void loadSprites() {
+        int width = 100;
+        int height = 100;
+
         // Loads the Setting Sprite
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.settings);
-        bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
+        bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
         int y = this.getHeight() / 16;
         int x = this.getWidth() - bitmap.getWidth() - y;
 
         settingsSprite = new Sprite(x, y, bitmap.getWidth(), bitmap.getHeight(), bitmap);
         canvas.drawBitmap(bitmap, x, y, null);
 
-        // Loads the Life/Poison Sprites
+        // Loads the Life Sprite
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.heart);
+        bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+        x = this.getWidth() / 16;
+        y = this.getHeight() / 16;
+
+        lifeSprite = new Sprite(x, y, bitmap.getWidth(), bitmap.getHeight(), bitmap);
+        canvas.drawBitmap(bitmap, x, y, null);
+
+        // Loads the Poison Sprite
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.poison);
+        bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+        x = this.getWidth() / 16 + width;
+        y = this.getHeight() / 16;
+
+        poisonSprite = new Sprite(x, y, bitmap.getWidth(), bitmap.getHeight(), bitmap);
+        canvas.drawBitmap(bitmap, x, y, null);
 
         // Loads the Commander Sprite
+        if (game.isCommander()) {
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.comander17);
+            bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+            x = this.getWidth() / 16;
+            y = this.getHeight() - bitmap.getHeight() - x;
+
+            commanderSprite = new Sprite(x, y, bitmap.getWidth(), bitmap.getHeight(), bitmap);
+            canvas.drawBitmap(bitmap, x, y, null);
+        }
+
+        // Loads the Vanguard Sprite
+        if (game.isVanguard()) {
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.commander);
+            bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+            int z = this.getHeight() / 16;
+            y = this.getHeight() - bitmap.getHeight() - z;
+            x = this.getWidth() - bitmap.getWidth() - z;
+
+            vanguardSprite = new Sprite(x, y, bitmap.getWidth(), bitmap.getHeight(), bitmap);
+            canvas.drawBitmap(bitmap, x, y, null);
+        }
     }
 
     /** Getters and Setters **/
