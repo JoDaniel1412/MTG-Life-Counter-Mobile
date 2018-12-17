@@ -129,8 +129,8 @@ public class LifeCounter extends View {
     }
 
     private void loadSprites() {
-        int width = 100;
-        int height = 100;
+        int width = this.getWidth() / 8;
+        int height = this.getWidth() / 8;
 
         // Loads the Setting Sprite
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.settings);
