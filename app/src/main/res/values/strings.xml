@@ -15,4 +15,13 @@
     <string name="setup_game_play">Play</string>
     <string name="game_touch_to_start">Touch to Start</string>
     <string name="setup_game_vanguard">Vanguard</string>
+    <string name="names_set_invokers">Set Invokers</string>
+    <string name="names_name_entry">Name</string>
+    <string name="names_skip">Skip</string>
+    <string name="names_p3">P3</string>
+    <string name="names_p4">P4</string>
+    <string name="names_p5">P5</string>
+    <string name="names_p6">P6</string>
+    <string name="names_p2">P2</string>
+    <string name="names_p1">P1</string>
 </resources>

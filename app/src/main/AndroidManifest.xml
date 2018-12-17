@@ -19,6 +19,7 @@
         <activity android:name=".controllers.PlayerSelectionActivity" />
         <activity android:name=".controllers.SetupGameActivity" />
         <activity android:name=".controllers.GameActivity" />
+        <activity android:name=".controllers.NamesActivity"></activity>
     </application>
 
 </manifest>

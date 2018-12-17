@@ -41,7 +41,7 @@ public class PlayerSelectionActivity extends AppCompatActivity {
         }
         Game.getInstance().setPlayers(players);
 
-        Intent animation = new Intent(this, SetupGameActivity.class);
+        Intent animation = new Intent(this, NamesActivity.class);
         startActivity(animation);
     }
 
