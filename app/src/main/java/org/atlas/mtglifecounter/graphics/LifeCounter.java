@@ -9,15 +9,16 @@ import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
 
 import org.atlas.mtglifecounter.R;
+import org.atlas.mtglifecounter.controllers.GameActivity;
 import org.atlas.mtglifecounter.game.Game;
 import org.atlas.mtglifecounter.game.Player;
 
 public class LifeCounter extends View {
 
     private Game game = Game.getInstance();
+    private GameActivity gameActivity;
     private Player player;
     private int color;
     private Canvas canvas;
@@ -151,6 +152,7 @@ public class LifeCounter extends View {
     }
 
     private void pressedSettings() {
+        gameActivity.openColorSelector(player);
     }
 
     private void updateLifeText() {
@@ -232,9 +234,18 @@ public class LifeCounter extends View {
         }
     }
 
+
     /**
      * Getters and Setters
      **/
+
+    public GameActivity getGameActivity() {
+        return gameActivity;
+    }
+
+    public void setGameActivity(GameActivity gameActivity) {
+        this.gameActivity = gameActivity;
+    }
 
     public Sprite getCommanderSprite() {
         return commanderSprite;

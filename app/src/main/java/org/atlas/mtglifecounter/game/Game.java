@@ -1,12 +1,16 @@
 package org.atlas.mtglifecounter.game;
 
+import org.atlas.mtglifecounter.graphics.LifeCounter;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Game {
 
     private static Game instance = null;
     private List<Player> players = new ArrayList<>();
+    private HashMap<Player, LifeCounter> lifeCounters = new HashMap<>();
     private boolean commander = false;
     private boolean vanguard = false;
     private int startingLife = 20;
@@ -41,6 +45,14 @@ public class Game {
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+
+    public HashMap<Player, LifeCounter> getLifeCounters() {
+        return lifeCounters;
+    }
+
+    public void setLifeCounters(HashMap<Player, LifeCounter> lifeCounters) {
+        this.lifeCounters = lifeCounters;
     }
 
     public boolean isCommander() {
