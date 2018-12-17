@@ -3,12 +3,6 @@
     <string name="main_button_start">Start Game</string>
     <string name="player_selection_button_continue">Continue</string>
     <string name="player_selection_tittle">Set Players</string>
-    <string name="player_selection_p6">P6</string>
-    <string name="player_selection_p5">P5</string>
-    <string name="player_selection_p4">P4</string>
-    <string name="player_selection_p3">P3</string>
-    <string name="player_selection_p2">P2</string>
-    <string name="player_selection_p1">P1</string>
     <string name="setup_game_tittle">Setup the Game</string>
     <string name="setup_game_starting_life">Starting Life</string>
     <string name="setup_game_commander">Commander</string>

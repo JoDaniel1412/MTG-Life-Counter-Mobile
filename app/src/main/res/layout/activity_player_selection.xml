@@ -18,7 +18,7 @@
         app:layout_constraintStart_toEndOf="@+id/p2"
         app:layout_constraintTop_toBottomOf="@+id/p3"
         app:srcCompat="@drawable/player_default"
-        android:contentDescription="@string/player_selection_p6" />
+        android:contentDescription="@string/names_p6" />
 
     <ImageView
         android:id="@+id/p4"
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/p1"
         app:srcCompat="@drawable/player_default"
-        android:contentDescription="@string/player_selection_p4" />
+        android:contentDescription="@string/names_p4" />
 
     <ImageView
         android:id="@+id/p5"
@@ -49,7 +49,7 @@
         app:layout_constraintStart_toEndOf="@+id/p1"
         app:layout_constraintTop_toBottomOf="@+id/p2"
         app:srcCompat="@drawable/player_default"
-        android:contentDescription="@string/player_selection_p5" />
+        android:contentDescription="@string/names_p5" />
 
     <ImageView
         android:id="@+id/p3"
@@ -64,7 +64,7 @@
         app:layout_constraintStart_toEndOf="@+id/p2"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/player_default"
-        android:contentDescription="@string/player_selection_p3" />
+        android:contentDescription="@string/names_p3" />
 
     <ImageView
         android:id="@+id/p2"
@@ -79,7 +79,7 @@
         app:layout_constraintStart_toEndOf="@+id/p1"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/player_default"
-        android:contentDescription="@string/player_selection_p2" />
+        android:contentDescription="@string/names_p2" />
 
     <ImageView
         android:id="@+id/p1"
@@ -94,7 +94,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/player_default"
-        android:contentDescription="@string/player_selection_p1" />
+        android:contentDescription="@string/names_p1" />
 
     <TextView
         android:id="@+id/textView"
