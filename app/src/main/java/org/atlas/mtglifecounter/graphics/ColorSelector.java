@@ -29,7 +29,7 @@ public class ColorSelector extends View {
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) gameActivity.closeColorSelector(color);
 
-        return super.onTouchEvent(event);
+        return true;
     }
 
 

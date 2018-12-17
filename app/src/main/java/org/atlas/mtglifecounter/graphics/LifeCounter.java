@@ -23,6 +23,7 @@ public class LifeCounter extends View {
     private int color;
     private Canvas canvas;
     private boolean poison;
+    private boolean touchable = true;
 
     // Sprites
     private Sprite commanderSprite;
@@ -64,6 +65,7 @@ public class LifeCounter extends View {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!touchable) return false;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 float x = event.getX();
@@ -269,5 +271,13 @@ public class LifeCounter extends View {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    public boolean isTouchable() {
+        return touchable;
+    }
+
+    public void setTouchable(boolean touchable) {
+        this.touchable = touchable;
     }
 }

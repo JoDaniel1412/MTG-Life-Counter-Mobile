@@ -19,7 +19,9 @@ import org.atlas.mtglifecounter.graphics.Colors;
 import org.atlas.mtglifecounter.graphics.LifeCounter;
 import org.atlas.mtglifecounter.util.Math;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -42,10 +44,16 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void openColorSelector(Player player) {
-        colors_layout.setBackgroundColor(Color.WHITE);
         playerColorSelector = player;
-        loadColorsGrid();
+        colors_layout.setBackgroundColor(Color.WHITE);
         colors_layout.setVisibility(View.VISIBLE);
+        loadColorsGrid();
+
+        // Blocks the LifeCounters onTouch event
+        for(Map.Entry<Player, LifeCounter> entry : game.getLifeCounters().entrySet()) {
+            entry.getValue().setTouchable(false);
+        }
+
     }
 
     public void closeColorSelector(int color) {
@@ -55,11 +63,17 @@ public class GameActivity extends AppCompatActivity {
         lifeCounter.setBackgroundColor(color);
 
         colors_layout.setVisibility(View.INVISIBLE);
+
+        // Unblocks the LifeCounters onTouch event
+        for(Map.Entry<Player, LifeCounter> entry : game.getLifeCounters().entrySet()) {
+            entry.getValue().setTouchable(true);
+        }
     }
 
     private void loadGrid() {
         Display display = getWindowManager(). getDefaultDisplay();
         int players_selected = game.getPlayers().size();
+        int color = Math.getRandomNumberInRange(0, colors.length - 1);
 
         int columns = (int) java.lang.Math.sqrt(players_selected);
         int rows = Math.ceilingDivision(players_selected, columns);
@@ -73,7 +87,7 @@ public class GameActivity extends AppCompatActivity {
         int p = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                int color = Math.getRandomNumberInRange(0, colors.length - 1);
+                color %= Colors.colors.length;
                 Player player = game.getPlayers().get(p);
 
                 // Sets the Life Counter Views
@@ -93,6 +107,7 @@ public class GameActivity extends AppCompatActivity {
 
                 x += xOffset;
                 p++;
+                color++;
             }
             x = 0;
             y += yOffset;
