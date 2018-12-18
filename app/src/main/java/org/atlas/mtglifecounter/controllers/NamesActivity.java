@@ -41,12 +41,7 @@ public class NamesActivity extends AppCompatActivity {
         p5 = findViewById(R.id.player_name_5);
         p6 = findViewById(R.id.player_name_6);
 
-        names.add(p1);
-        names.add(p2);
-        names.add(p3);
-        names.add(p4);
-        names.add(p5);
-        names.add(p6);
+       loadNamesEntries();
     }
 
     public void pressed_continue(View view) {
@@ -60,5 +55,22 @@ public class NamesActivity extends AppCompatActivity {
 
         Intent animation = new Intent(this, SetupGameActivity.class);
         startActivity(animation);
+    }
+
+    private void loadNamesEntries() {
+        List<Player> playerList = game.getPlayers();
+        List<EditText> temp = new ArrayList<>();
+        temp.add(p1);
+        temp.add(p2);
+        temp.add(p3);
+        temp.add(p4);
+        temp.add(p5);
+        temp.add(p6);
+
+        for (int i = 0; i < playerList.size(); i++) {
+            EditText name = temp.get(i);
+            name.setEnabled(true);
+            names.add(name);
+        }
     }
 }

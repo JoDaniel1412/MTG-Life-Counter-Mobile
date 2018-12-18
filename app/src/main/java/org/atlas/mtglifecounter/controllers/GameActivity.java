@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.atlas.mtglifecounter.R;
 import org.atlas.mtglifecounter.game.Game;
@@ -28,8 +29,13 @@ public class GameActivity extends AppCompatActivity {
     private Game game = Game.getInstance();
     private FrameLayout game_layout;
     private FrameLayout colors_layout;
+    private FrameLayout commander_layout;
+    private FrameLayout vanguard_layout;
+
     private int[] colors = Colors.colors;
+
     private Player playerColorSelector;
+    private Player playerCommanderSelector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,32 +46,44 @@ public class GameActivity extends AppCompatActivity {
 
         game_layout = findViewById(R.id.game_layout);
         colors_layout = findViewById(R.id.colors_layout);
+        commander_layout = findViewById(R.id.commander_layout);
+        vanguard_layout = findViewById(R.id.vanguard_layout);
         loadGrid();
     }
 
-    public void openColorSelector(Player player) {
+    public void openColorLayout(Player player) {
         playerColorSelector = player;
         colors_layout.setVisibility(View.VISIBLE);
         loadColorsGrid();
 
-        // Blocks the LifeCounters onTouch event
-        for(Map.Entry<Player, LifeCounter> entry : game.getLifeCounters().entrySet()) {
-            entry.getValue().setTouchable(false);
-        }
-
+        enabledGameLayout(false);
     }
 
-    public void closeColorSelector(int color) {
+    public void closeColorLayout(int color) {
         LifeCounter lifeCounter = game.getLifeCounters().get(playerColorSelector);
         assert lifeCounter != null;
         lifeCounter.setColor(color);
         lifeCounter.setBackgroundColor(color);
 
         colors_layout.setVisibility(View.INVISIBLE);
+        enabledGameLayout(true);
+    }
 
-        // Unblocks the LifeCounters onTouch event
+    public void openCommanderLayout(Player player) {
+        playerCommanderSelector = player;
+        commander_layout.setVisibility(View.VISIBLE);
+        loadCommanderGrid();
+        enabledGameLayout(false);
+    }
+
+    public void closeCommanderLayout() {
+        commander_layout.setVisibility(View.INVISIBLE);
+        enabledGameLayout(true);
+    }
+
+    private void enabledGameLayout(boolean enabled) {
         for(Map.Entry<Player, LifeCounter> entry : game.getLifeCounters().entrySet()) {
-            entry.getValue().setTouchable(true);
+            entry.getValue().setTouchable(enabled);
         }
     }
 
@@ -147,6 +165,63 @@ public class GameActivity extends AppCompatActivity {
                 c++;
             }
             x = xOffset / 2;
+            y += yOffset;
+        }
+    }
+
+    private void loadCommanderGrid() {
+        List<Player> playerList = game.getPlayers();
+        int playerIndex = playerList.indexOf(playerCommanderSelector);
+        HashMap<Player, Integer> commanderDamages = playerList.get(playerIndex).getCommanderDamage();
+        int size = commanderDamages.size();
+
+        int color = Math.getRandomNumberInRange(0, colors.length - 1);
+
+        int columns = (int) java.lang.Math.sqrt(size);
+        int rows = Math.ceilingDivision(size, columns);
+        int width = commander_layout.getWidth();
+        int height = commander_layout.getHeight();
+        int xOffset = width / columns;
+        int yOffset = height / rows;
+        float x = 0;
+        float y = 0;
+
+        int c = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (c >= size) break;
+                Player player = playerList.get(c);
+                // In case the loop reaches the player in the commander selector
+                if (player.equals(playerCommanderSelector)) continue;
+                int damage = commanderDamages.get(player);
+
+                // Sets the names in a TextView
+                TextView nameText = new TextView(this);
+                nameText.setX(x);
+                nameText.setY(y);
+                nameText.setMaxWidth(xOffset);
+                nameText.setText(player.getName());
+                nameText.setTextSize(40);
+                nameText.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+
+                // Sets the damage dealt in a TextView
+                TextView damageEntry = new TextView(this);
+                damageEntry.setX(x);
+                damageEntry.setY(y + 50);
+                damageEntry.setMaxWidth(xOffset);
+                damageEntry.setHeight(yOffset);
+                damageEntry.setText(String.valueOf(damage));
+                damageEntry.setTextSize(40);
+                damageEntry.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+
+                // Adds the view to the commander_layout
+                commander_layout.addView(nameText);
+                commander_layout.addView(damageEntry);
+
+                x += xOffset;
+                c++;
+            }
+            x = 0;
             y += yOffset;
         }
     }

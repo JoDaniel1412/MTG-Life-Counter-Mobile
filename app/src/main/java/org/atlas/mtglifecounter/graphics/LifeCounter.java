@@ -124,6 +124,7 @@ public class LifeCounter extends View {
     }
 
     private void pressedCommander() {
+        gameActivity.openCommanderLayout(player);
     }
 
     private void pressedVanguard() {
@@ -154,7 +155,7 @@ public class LifeCounter extends View {
     }
 
     private void pressedSettings() {
-        gameActivity.openColorSelector(player);
+        gameActivity.openColorLayout(player);
     }
 
     private void updateLifeText() {

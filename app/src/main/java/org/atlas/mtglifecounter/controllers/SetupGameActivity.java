@@ -18,6 +18,7 @@ import java.util.List;
 
 public class SetupGameActivity extends AppCompatActivity {
 
+    private Game game = Game.getInstance();
     private Switch commander_switch;
     private Switch vanguard_switch;
     private EditText starting_life_entry;
@@ -32,6 +33,9 @@ public class SetupGameActivity extends AppCompatActivity {
         commander_switch = findViewById(R.id.commander_switch);
         vanguard_switch = findViewById(R.id.vanguard_switch);
         starting_life_entry = findViewById(R.id.starting_life_entry);
+
+        // Disables commander
+        if (game.getPlayers().size() == 1) commander_switch.setEnabled(false);
     }
 
     public void pressed_play(View view) {

@@ -15,10 +15,12 @@ import org.atlas.mtglifecounter.game.Game;
 import org.atlas.mtglifecounter.game.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PlayerSelectionActivity extends AppCompatActivity {
 
+    private Game game = Game.getInstance();
     private int players_selected = 1;
     private List<ImageView> player_list = new ArrayList<>();
 
@@ -39,10 +41,24 @@ public class PlayerSelectionActivity extends AppCompatActivity {
         for(int i = 0; i < players_selected; i++) {
             players.add(new Player());
         }
-        Game.getInstance().setPlayers(players);
+        game.setPlayers(players);
+        loadPlayerCommanderDamage();
 
         Intent animation = new Intent(this, NamesActivity.class);
         startActivity(animation);
+    }
+
+    private void loadPlayerCommanderDamage() {
+        for (Player player : game.getPlayers()) {
+            HashMap<Player, Integer> map = new HashMap<>();
+
+            for (Player tmp : game.getPlayers()) {
+                if (tmp.equals(player)) continue;
+                map.put(tmp, 0);
+            }
+
+            player.setCommanderDamage(map);
+        }
     }
 
     @SuppressLint("FindViewByIdCast")
