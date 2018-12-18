@@ -7,9 +7,9 @@ public class Colors {
     public static int[] colors = new int[] {
             Color.parseColor("#2EC4B6"),
             Color.parseColor("#E71D36"),
+            Color.parseColor("#139A43"),
             Color.parseColor("#FF9F1C"),
             Color.parseColor("#540D6E"),
-            Color.parseColor("#DE1A1A"),
             Color.parseColor("#BBDEF0"),
             Color.parseColor("#321325"),
             Color.parseColor("#9A031E"),
@@ -17,5 +17,8 @@ public class Colors {
             Color.parseColor("#2F2D2E"),
             Color.parseColor("#603140"),
             Color.parseColor("#B87D4B"),
+            Color.parseColor("#1F7A8C"),
+            Color.parseColor("#E53D00"),
+            Color.parseColor("#C5D86D"),
     };
 }

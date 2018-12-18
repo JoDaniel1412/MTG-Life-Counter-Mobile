@@ -45,7 +45,6 @@ public class GameActivity extends AppCompatActivity {
 
     public void openColorSelector(Player player) {
         playerColorSelector = player;
-        colors_layout.setBackgroundColor(Color.WHITE);
         colors_layout.setVisibility(View.VISIBLE);
         loadColorsGrid();
 

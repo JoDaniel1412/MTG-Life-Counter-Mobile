@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="colorWhiteText">#FDFFFC</color>
+    <color name="colorWhiteText">#F7F7F2</color>
+    <color name="colorAlphaWhite">#64fdfffc</color>
     <color name="colorMaastrichtBlue">#011627</color>
     <color name="colorMaximumBlueGreen">#2EC4B6</color>
     <color name="colorRoseMadder">#E71D36</color>
@@ -18,4 +19,8 @@
     <color name="colorCharlestonGreen">#2F2D2E</color>
     <color name="colorWineDregs">#603140</color>
     <color name="colorBrownSugar">#B87D4B</color>
+    <color name="colorCoquelicot">#E53D00</color>
+    <color name="colorMetallicSeaWeed">#1F7A8C</color>
+    <color name="colorJuneBud">#C5D86D</color>
+    <color name="colorGreen">#139A43</color>
 </resources>
