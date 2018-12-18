@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -76,7 +77,7 @@ public class GameActivity extends AppCompatActivity {
         enabledGameLayout(false);
     }
 
-    public void closeCommanderLayout() {
+    public void closeCommanderLayout(View view) {
         commander_layout.setVisibility(View.INVISIBLE);
         enabledGameLayout(true);
     }
@@ -184,7 +185,8 @@ public class GameActivity extends AppCompatActivity {
         int xOffset = width / columns;
         int yOffset = height / rows;
         float x = 0;
-        float y = 0;
+        float y = -100;
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(xOffset, yOffset);
 
         int c = 0;
         for (int i = 0; i < rows; i++) {
@@ -199,20 +201,21 @@ public class GameActivity extends AppCompatActivity {
                 TextView nameText = new TextView(this);
                 nameText.setX(x);
                 nameText.setY(y);
-                nameText.setMaxWidth(xOffset);
+                nameText.setLayoutParams(params);
+
                 nameText.setText(player.getName());
                 nameText.setTextSize(40);
-                nameText.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+                nameText.setGravity(Gravity.CENTER);
 
                 // Sets the damage dealt in a TextView
                 TextView damageEntry = new TextView(this);
                 damageEntry.setX(x);
-                damageEntry.setY(y + 50);
-                damageEntry.setMaxWidth(xOffset);
-                damageEntry.setHeight(yOffset);
+                damageEntry.setY(y + 150);
+                damageEntry.setLayoutParams(params);
+
                 damageEntry.setText(String.valueOf(damage));
                 damageEntry.setTextSize(40);
-                damageEntry.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+                damageEntry.setGravity(Gravity.CENTER);
 
                 // Adds the view to the commander_layout
                 commander_layout.addView(nameText);
