@@ -72,6 +72,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void openCommanderLayout(Player player) {
         playerCommanderSelector = player;
+        commander_layout.invalidate();
         commander_layout.setVisibility(View.VISIBLE);
         loadCommanderGrid();
         enabledGameLayout(false);
@@ -90,11 +91,11 @@ public class GameActivity extends AppCompatActivity {
 
     private void loadGrid() {
         Display display = getWindowManager(). getDefaultDisplay();
-        int players_selected = game.getPlayers().size();
+        int size = game.getPlayers().size();
         int color = Math.getRandomNumberInRange(0, colors.length - 1);
 
-        int columns = (int) java.lang.Math.sqrt(players_selected);
-        int rows = Math.ceilingDivision(players_selected, columns);
+        int columns = (int) java.lang.Math.sqrt(size);
+        int rows = Math.ceilingDivision(size, columns);
         int width = display.getWidth();
         int height = display.getHeight();
         int xOffset = width / columns;
@@ -105,6 +106,12 @@ public class GameActivity extends AppCompatActivity {
         int p = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
+                // Case the last rows wont be completed fill
+                if (p == size - 1 && j == columns - 2) {
+                    xOffset = width;
+                    j++;
+                }
+
                 color %= Colors.colors.length;
                 Player player = game.getPlayers().get(p);
 
@@ -191,10 +198,14 @@ public class GameActivity extends AppCompatActivity {
         int c = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (c >= size) break;
+                if (c > size) break;
                 Player player = playerList.get(c);
                 // In case the loop reaches the player in the commander selector
-                if (player.equals(playerCommanderSelector)) continue;
+                if (player.equals(playerCommanderSelector)){
+                    j--;
+                    c++;
+                    continue;
+                }
                 int damage = commanderDamages.get(player);
 
                 // Sets the names in a TextView
