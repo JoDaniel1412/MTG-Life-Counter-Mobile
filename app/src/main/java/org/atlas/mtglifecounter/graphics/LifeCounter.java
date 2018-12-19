@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,8 +35,8 @@ public class LifeCounter extends View {
     private Sprite poisonWaterMark;
 
     // Paints
-    Paint LifeTextPaint = new Paint();
-    Paint NameTextPaint = new Paint();
+    Paint lifeTextPaint = new Paint();
+    Paint nameTextPaint = new Paint();
     Paint lifePaint = new Paint();
     Paint poisonPaint = new Paint();
 
@@ -46,13 +47,6 @@ public class LifeCounter extends View {
 
     private void init() {
         poisonPaint.setAlpha(100);
-    }
-
-    private void loadPaints() {
-        LifeTextPaint.setTextSize(this.getWidth() / 3);
-        LifeTextPaint.setColor(ContextCompat.getColor(this.getContext(), R.color.colorWhiteText));
-        NameTextPaint.setTextSize(this.getWidth() / 8);
-        NameTextPaint.setColor(ContextCompat.getColor(this.getContext(), R.color.colorWhiteText));
     }
 
     @Override
@@ -98,6 +92,15 @@ public class LifeCounter extends View {
         }
         this.invalidate();
         return true;
+    }
+
+    private void loadPaints() {
+        int color = ContextCompat.getColor(this.getContext(), R.color.colorWhiteText);
+        lifeTextPaint.setTextSize(this.getWidth() / 3);
+        lifeTextPaint.setColor(color);
+
+        nameTextPaint.setTextSize(this.getWidth() / 8);
+        nameTextPaint.setColor(color);
     }
 
     private void pressedLifeCounter(float y) {
@@ -166,13 +169,15 @@ public class LifeCounter extends View {
         if (!poison) text = String.valueOf(player.getLife());
         else text = String.valueOf(player.getPoison());
 
-        float offsetX = LifeTextPaint.getTextSize() / 2;
-        float offsetY = offsetX / 2;
-        if (text.length() == 1) offsetX /= 2;
-        float x = canvas.getWidth() / 2 - offsetX;
-        float y = canvas.getHeight() / 2 + offsetY;
+        Rect bounds = new Rect();
+        lifeTextPaint.getTextBounds(text, 0, text.length(), bounds);
 
-        canvas.drawText(text, x, y, LifeTextPaint);
+        float hw = bounds.width() / 2;
+        float hh = bounds.height() / 2;
+        float x = canvas.getWidth() / 2 - hw;
+        float y = canvas.getHeight() / 2 + hh;
+
+        canvas.drawText(text, x, y, lifeTextPaint);
     }
 
     private void drawSprites() {
@@ -207,10 +212,16 @@ public class LifeCounter extends View {
         canvas.drawBitmap(bitmap, x, y, poisonPaint);
 
         // Loads the Name
-        x = this.getWidth() / 2 - (int) NameTextPaint.getTextSize() / 2;
-        y = this.getHeight() / 18 + height;
-        String name = player.getName();
-        canvas.drawText(name, x, y, NameTextPaint);
+        if (game.isPlayerNamesDisplayed()) {
+            String name = player.getName();
+            Rect bounds = new Rect();
+            nameTextPaint.getTextBounds(name, 0, name.length(), bounds);
+
+            x = this.getWidth() / 2 - bounds.width() / 2;
+            y = this.getHeight() / 18 + bounds.height();
+
+            canvas.drawText(name, x, y, nameTextPaint);
+        }
 
         // Loads the Commander Sprite
         if (game.isCommander()) {

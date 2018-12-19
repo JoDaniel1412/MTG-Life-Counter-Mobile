@@ -20,4 +20,7 @@
     <string name="names_p1">P1</string>
     <string name="commander_layout_bOk">OK</string>
     <string name="main_icon_todo">TODO</string>
+    <string name="starting_life">20</string>
+    <string name="setup_game_player_names">Player Names</string>
+    <string name="names_max_5_characters_recomended">(Max 5 Characters Recomended)</string>
 </resources>

@@ -13,6 +13,7 @@ public class Game {
     private HashMap<Player, LifeCounter> lifeCounters = new HashMap<>();
     private boolean commander = false;
     private boolean vanguard = false;
+    private boolean playerNamesDisplayed;
     private int startingLife = 20;
 
     public static Game getInstance() {
@@ -22,9 +23,9 @@ public class Game {
         return instance;
     }
 
-    public static Game getInstance(List<Player> players, boolean commander, boolean vanguard, int startingLife) {
+    public static Game getInstance(List<Player> players, boolean commander, boolean vanguard, boolean playerNamesDisplayed, int startingLife) {
         if (instance == null) {
-            instance = new Game(players, commander,vanguard, startingLife);
+            instance = new Game(players, commander,vanguard, playerNamesDisplayed, startingLife);
         }
         return instance;
     }
@@ -32,10 +33,11 @@ public class Game {
     private Game() {
     }
 
-    private Game(List<Player> players, boolean commander, boolean vanguard, int startingLife) {
+    private Game(List<Player> players, boolean commander, boolean vanguard, boolean playerNamesDisplayed, int startingLife) {
         this.players = players;
         this.commander = commander;
         this.vanguard = vanguard;
+        this.playerNamesDisplayed = playerNamesDisplayed;
         this.startingLife = startingLife;
     }
 
@@ -69,6 +71,14 @@ public class Game {
 
     public void setVanguard(boolean vanguard) {
         this.vanguard = vanguard;
+    }
+
+    public boolean isPlayerNamesDisplayed() {
+        return playerNamesDisplayed;
+    }
+
+    public void setPlayerNamesDisplayed(boolean playerNamesDisplayed) {
+        this.playerNamesDisplayed = playerNamesDisplayed;
     }
 
     public int getStartingLife() {
