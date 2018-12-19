@@ -1,14 +1,20 @@
 package org.atlas.mtglifecounter.controllers;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +24,7 @@ import org.atlas.mtglifecounter.game.Game;
 import org.atlas.mtglifecounter.game.Player;
 import org.atlas.mtglifecounter.graphics.ColorSelector;
 import org.atlas.mtglifecounter.graphics.Colors;
+import org.atlas.mtglifecounter.graphics.CommanderCounter;
 import org.atlas.mtglifecounter.graphics.LifeCounter;
 import org.atlas.mtglifecounter.util.Math;
 
@@ -32,6 +39,7 @@ public class GameActivity extends AppCompatActivity {
     private FrameLayout colors_layout;
     private FrameLayout commander_layout;
     private FrameLayout vanguard_layout;
+    private Button commander_button;
 
     private int[] colors = Colors.colors;
 
@@ -49,6 +57,7 @@ public class GameActivity extends AppCompatActivity {
         colors_layout = findViewById(R.id.colors_layout);
         commander_layout = findViewById(R.id.commander_layout);
         vanguard_layout = findViewById(R.id.vanguard_layout);
+        commander_button = findViewById(R.id.commander_button);
         loadGrid();
     }
 
@@ -72,7 +81,8 @@ public class GameActivity extends AppCompatActivity {
 
     public void openCommanderLayout(Player player) {
         playerCommanderSelector = player;
-        commander_layout.invalidate();
+        commander_layout.removeAllViews();
+        commander_layout.addView(commander_button);
         commander_layout.setVisibility(View.VISIBLE);
         loadCommanderGrid();
         enabledGameLayout(false);
@@ -181,25 +191,24 @@ public class GameActivity extends AppCompatActivity {
         List<Player> playerList = game.getPlayers();
         int playerIndex = playerList.indexOf(playerCommanderSelector);
         HashMap<Player, Integer> commanderDamages = playerList.get(playerIndex).getCommanderDamage();
+
         int size = commanderDamages.size();
-
-        int color = Math.getRandomNumberInRange(0, colors.length - 1);
-
         int columns = (int) java.lang.Math.sqrt(size);
         int rows = Math.ceilingDivision(size, columns);
         int width = commander_layout.getWidth();
         int height = commander_layout.getHeight();
         int xOffset = width / columns;
-        int yOffset = height / rows;
+        int yOffset = (int) (height / rows * 0.9);
         float x = 0;
         float y = -100;
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(xOffset, yOffset);
 
         int c = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (c > size) break;
                 Player player = playerList.get(c);
+                String name = player.getName();
+
                 // In case the loop reaches the player in the commander selector
                 if (player.equals(playerCommanderSelector)){
                     j--;
@@ -214,30 +223,18 @@ public class GameActivity extends AppCompatActivity {
                     j++;
                 }
 
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(xOffset, yOffset);
+
                 // Sets the names in a TextView
-                TextView nameText = new TextView(this);
-                nameText.setX(x);
-                nameText.setY(y);
-                nameText.setLayoutParams(params);
-
-                nameText.setText(player.getName());
-                nameText.setTextSize(40);
-                nameText.setGravity(Gravity.CENTER);
-
-                // Sets the damage dealt in a TextView
-                TextView damageEntry = new TextView(this);
-                damageEntry.setX(x);
-                damageEntry.setY(y + 150);
-                damageEntry.setLayoutParams(params);
-
-                damageEntry.setText(String.valueOf(damage));
-                damageEntry.setTextSize(40);
-                damageEntry.setGravity(Gravity.CENTER);
+                CommanderCounter commanderCounter = new CommanderCounter(this);
+                commanderCounter.setX(x);
+                commanderCounter.setY(y);
+                commanderCounter.setLayoutParams(params);
+                commanderCounter.setName(name);
+                commanderCounter.setDamage(damage);
 
                 // Adds the view to the commander_layout
-                commander_layout.addView(nameText);
-                commander_layout.addView(damageEntry);
-
+                commander_layout.addView(commanderCounter);
                 x += xOffset;
                 c++;
             }

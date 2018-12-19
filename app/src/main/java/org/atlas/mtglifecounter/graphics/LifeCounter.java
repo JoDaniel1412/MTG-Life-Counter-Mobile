@@ -56,7 +56,7 @@ public class LifeCounter extends View {
         loadPaints();
         drawWaterMarks();
         drawSprites();
-        updateLifeText();
+        drawLifeText();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -164,7 +164,7 @@ public class LifeCounter extends View {
         gameActivity.openColorLayout(player);
     }
 
-    private void updateLifeText() {
+    private void drawLifeText() {
         String text;
         if (!poison) text = String.valueOf(player.getLife());
         else text = String.valueOf(player.getPoison());
