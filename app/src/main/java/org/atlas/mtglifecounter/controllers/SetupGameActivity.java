@@ -1,9 +1,11 @@
 package org.atlas.mtglifecounter.controllers;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,7 +38,7 @@ public class SetupGameActivity extends AppCompatActivity {
         vanguard_switch = findViewById(R.id.vanguard_switch);
         display_players_name_switch = findViewById(R.id.display_players_name_switch);
 
-        // Disables commander
+        // Disables commander switch if only one Player
         if (game.getPlayers().size() == 1) commander_switch.setEnabled(false);
     }
 
@@ -60,5 +62,14 @@ public class SetupGameActivity extends AppCompatActivity {
 
         Intent animation = new Intent(this, GameActivity.class);
         startActivity(animation);
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void pressed_commander_switch(View view) {
+        if (commander_switch.isChecked()) {
+            starting_life_entry.setText("40");
+        } else {
+            starting_life_entry.setText("20");
+        }
     }
 }
