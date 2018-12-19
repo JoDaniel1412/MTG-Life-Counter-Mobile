@@ -208,6 +208,12 @@ public class GameActivity extends AppCompatActivity {
                 }
                 int damage = commanderDamages.get(player);
 
+                // Case the last rows wont be completed fill
+                if (c == size - 1 && j == columns - 2) {
+                    x += xOffset / 2;
+                    j++;
+                }
+
                 // Sets the names in a TextView
                 TextView nameText = new TextView(this);
                 nameText.setX(x);
