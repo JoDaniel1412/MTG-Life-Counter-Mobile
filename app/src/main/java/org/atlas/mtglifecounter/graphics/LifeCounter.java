@@ -34,7 +34,8 @@ public class LifeCounter extends View {
     private Sprite poisonWaterMark;
 
     // Paints
-    Paint textPaint = new Paint();
+    Paint LifeTextPaint = new Paint();
+    Paint NameTextPaint = new Paint();
     Paint lifePaint = new Paint();
     Paint poisonPaint = new Paint();
 
@@ -47,16 +48,18 @@ public class LifeCounter extends View {
         poisonPaint.setAlpha(100);
     }
 
-    private void loadColors() {
-        textPaint.setTextSize(this.getWidth() / 3);
-        textPaint.setColor(ContextCompat.getColor(this.getContext(), R.color.colorWhiteText));
+    private void loadPaints() {
+        LifeTextPaint.setTextSize(this.getWidth() / 3);
+        LifeTextPaint.setColor(ContextCompat.getColor(this.getContext(), R.color.colorWhiteText));
+        NameTextPaint.setTextSize(this.getWidth() / 8);
+        NameTextPaint.setColor(ContextCompat.getColor(this.getContext(), R.color.colorWhiteText));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         this.canvas = canvas;
-        loadColors();
+        loadPaints();
         drawWaterMarks();
         drawSprites();
         updateLifeText();
@@ -163,13 +166,13 @@ public class LifeCounter extends View {
         if (!poison) text = String.valueOf(player.getLife());
         else text = String.valueOf(player.getPoison());
 
-        float offsetX = textPaint.getTextSize() / 2;
+        float offsetX = LifeTextPaint.getTextSize() / 2;
         float offsetY = offsetX / 2;
         if (text.length() == 1) offsetX /= 2;
         float x = canvas.getWidth() / 2 - offsetX;
         float y = canvas.getHeight() / 2 + offsetY;
 
-        canvas.drawText(text, x, y, textPaint);
+        canvas.drawText(text, x, y, LifeTextPaint);
     }
 
     private void drawSprites() {
@@ -202,6 +205,12 @@ public class LifeCounter extends View {
 
         poisonSprite = new Sprite(x, y, bitmap.getWidth(), bitmap.getHeight(), bitmap);
         canvas.drawBitmap(bitmap, x, y, poisonPaint);
+
+        // Loads the Name
+        x = this.getWidth() / 2 - (int) NameTextPaint.getTextSize() / 2;
+        y = this.getHeight() / 18 + height;
+        String name = player.getName();
+        canvas.drawText(name, x, y, NameTextPaint);
 
         // Loads the Commander Sprite
         if (game.isCommander()) {
