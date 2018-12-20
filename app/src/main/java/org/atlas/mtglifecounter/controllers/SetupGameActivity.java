@@ -16,7 +16,9 @@ import org.atlas.mtglifecounter.R;
 import org.atlas.mtglifecounter.game.Game;
 import org.atlas.mtglifecounter.game.Player;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SetupGameActivity extends AppCompatActivity {
 
@@ -43,7 +45,6 @@ public class SetupGameActivity extends AppCompatActivity {
     }
 
     public void pressed_play(View view) {
-        Game game = Game.getInstance();
         game.setStartingLife(Integer.parseInt(starting_life_entry.getText().toString()));
         game.setCommander(commander_switch.isChecked());
         game.setVanguard(vanguard_switch.isChecked());
@@ -54,11 +55,7 @@ public class SetupGameActivity extends AppCompatActivity {
         Log.i("SetupGameAttributes", "Vanguard enable: " + game.isVanguard());
         Log.i("SetupGameAttributes", "Players Name enable: " + game.isPlayerNamesDisplayed());
 
-        // Sets the life for each Player
-        List<Player> players = game.getPlayers();
-        for (Player player : players) {
-            player.setLife(game.getStartingLife());
-        }
+        clearPlayersData();
 
         Intent animation = new Intent(this, GameActivity.class);
         startActivity(animation);
@@ -70,6 +67,20 @@ public class SetupGameActivity extends AppCompatActivity {
             starting_life_entry.setText("40");
         } else {
             starting_life_entry.setText("20");
+        }
+    }
+
+    private void clearPlayersData() {
+        // Sets the life for each Player
+        List<Player> players = game.getPlayers();
+        for (Player player : players) {
+            player.setLife(game.getStartingLife());
+
+            // Clears the Commander damage
+            HashMap<Player, Integer> map = player.getCommanderDamage();
+            for (Map.Entry<Player, Integer> entry : map.entrySet()) {
+                entry.setValue(0);
+            }
         }
     }
 }

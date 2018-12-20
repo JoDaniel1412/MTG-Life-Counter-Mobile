@@ -45,6 +45,7 @@ public class GameActivity extends AppCompatActivity {
 
     private Player playerColorSelector;
     private Player playerCommanderSelector;
+    private HashMap<Player, CommanderCounter> currentCommanderMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +90,17 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void closeCommanderLayout(View view) {
-
+        // Updates the damage in the current Player
+        HashMap<Player, Integer> map = playerCommanderSelector.getCommanderDamage();
+        for (Map.Entry<Player, Integer> entry : map.entrySet()) {
+            Player player = entry.getKey();
+            for (Map.Entry<Player, CommanderCounter> entry2 : currentCommanderMap.entrySet()) {
+                if (player.equals(entry2.getKey())){
+                    int damage = entry2.getValue().getDamage();
+                    entry.setValue(damage);
+                }
+            }
+        }
 
         commander_layout.setVisibility(View.INVISIBLE);
         enabledGameLayout(true);
@@ -193,6 +204,7 @@ public class GameActivity extends AppCompatActivity {
         List<Player> playerList = game.getPlayers();
         int playerIndex = playerList.indexOf(playerCommanderSelector);
         HashMap<Player, Integer> commanderDamages = playerList.get(playerIndex).getCommanderDamage();
+        currentCommanderMap = new HashMap<>();
 
         int size = commanderDamages.size();
         int columns = (int) java.lang.Math.sqrt(size);
@@ -239,7 +251,7 @@ public class GameActivity extends AppCompatActivity {
                 commanderCounter.setBackgroundColor(color);
 
                 // Adds the view to the commander_layout
-                game.getCommanderCounters().put(player, commanderCounter);
+                currentCommanderMap.put(player, commanderCounter);
                 commander_layout.addView(commanderCounter);
                 x += xOffset;
                 c++;
