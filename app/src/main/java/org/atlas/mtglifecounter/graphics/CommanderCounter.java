@@ -52,23 +52,22 @@ public class CommanderCounter extends View {
     }
 
     private void drawTexts() {
-        // Sets the params for name
         String name = this.name;
-
-        Rect bounds = new Rect();
-        textPaint.getTextBounds(name, 0, name.length(), bounds);
-        float hw = bounds.width() / 2;
-        float hh = bounds.height() / 2;
-        float x = canvas.getWidth() / 2 - hw;
-        float y = canvas.getHeight() / 3 + hh;
-
-        // Sets the params for damage
         String damageStr = String.valueOf(damage);
 
-        Rect bounds2 = new Rect();
-        textPaint.getTextBounds(damageStr, 0, damageStr.length(), bounds2);
-        float x2 = canvas.getWidth() / 2 - bounds2.width() / 2;
-        float y2 = canvas.getHeight() / 2 + bounds2.height() / 2 + hh * 2;
+        Rect nameBounds = new Rect();
+        Rect damageBounds = new Rect();
+        textPaint.getTextBounds(name, 0, name.length(), nameBounds);
+        textPaint.getTextBounds(damageStr, 0, damageStr.length(), damageBounds);
+
+        int hw = canvas.getWidth() / 2;
+        int hh = canvas.getHeight() / 2;
+
+        float x = hw - nameBounds.width() / 2;
+        float y = hh - nameBounds.height() / 3;
+
+        float x2 = hw - damageBounds.width() / 2;
+        float y2 = hh + damageBounds.height();
 
 
         // Draws the texts in the canvas

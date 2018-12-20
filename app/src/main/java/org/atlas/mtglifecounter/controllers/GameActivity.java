@@ -214,7 +214,7 @@ public class GameActivity extends AppCompatActivity {
         int xOffset = width / columns;
         int yOffset = (int) (height / rows * 0.9);
         float x = 0;
-        float y = -100;
+        float y = 0;
 
         int c = 0;
         for (int i = 0; i < rows; i++) {
@@ -231,8 +231,8 @@ public class GameActivity extends AppCompatActivity {
                 }
 
                 // Case the last rows wont be completed fill
-                if (c == size - 1 && j == columns - 2) {
-                    x += xOffset / 2;
+                if (x == 0 && c > 3) {
+                    xOffset = width;
                     j++;
                 }
 
