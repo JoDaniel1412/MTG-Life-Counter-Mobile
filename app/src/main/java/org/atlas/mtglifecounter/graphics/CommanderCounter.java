@@ -1,16 +1,13 @@
 package org.atlas.mtglifecounter.graphics;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.v4.content.ContextCompat;
-import android.text.InputType;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
-
-import org.atlas.mtglifecounter.R;
 
 public class CommanderCounter extends View {
 
@@ -31,8 +28,21 @@ public class CommanderCounter extends View {
         this.canvas = canvas;
 
         loadPaints();
-        drawName();
-        drawDamage();
+        drawTexts();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) pressedCommanderCounter(event.getY());
+        this.invalidate();
+        return true;
+    }
+
+    private void pressedCommanderCounter(float y) {
+        float hh = canvas.getHeight() / 2;
+        if (y < hh) damage++;
+        if (y >= hh) damage--;
     }
 
     private void loadPaints() {
@@ -41,29 +51,29 @@ public class CommanderCounter extends View {
         textPaint.setColor(color);
     }
 
-    private void drawName() {
+    private void drawTexts() {
+        // Sets the params for name
+        String name = this.name;
+
         Rect bounds = new Rect();
         textPaint.getTextBounds(name, 0, name.length(), bounds);
-
         float hw = bounds.width() / 2;
         float hh = bounds.height() / 2;
         float x = canvas.getWidth() / 2 - hw;
         float y = canvas.getHeight() / 3 + hh;
 
+        // Sets the params for damage
+        String damageStr = String.valueOf(damage);
+
+        Rect bounds2 = new Rect();
+        textPaint.getTextBounds(damageStr, 0, damageStr.length(), bounds2);
+        float x2 = canvas.getWidth() / 2 - bounds2.width() / 2;
+        float y2 = canvas.getHeight() / 2 + bounds2.height() / 2 + hh * 2;
+
+
+        // Draws the texts in the canvas
         canvas.drawText(name, x, y, textPaint);
-    }
-
-    private void drawDamage() {
-        EditText damageText = new EditText(this.getContext());
-        damageText.setInputType(InputType.TYPE_CLASS_NUMBER);
-        damageText.setText(String.valueOf(damage));
-        damageText.setTextSize(textPaint.getTextSize());
-
-        float x = canvas.getWidth() / 2 - damageText.getWidth();
-        float y = canvas.getHeight() / 3 + damageText.getHeight();
-
-        damageText.setX(x);
-        damageText.setY(y);
+        canvas.drawText(damageStr, x2, y2, textPaint);
     }
 
     public String getName() {

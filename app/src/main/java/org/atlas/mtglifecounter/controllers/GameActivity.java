@@ -89,6 +89,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void closeCommanderLayout(View view) {
+
+
         commander_layout.setVisibility(View.INVISIBLE);
         enabledGameLayout(true);
     }
@@ -215,13 +217,15 @@ public class GameActivity extends AppCompatActivity {
                     c++;
                     continue;
                 }
-                int damage = commanderDamages.get(player);
 
                 // Case the last rows wont be completed fill
                 if (c == size - 1 && j == columns - 2) {
                     x += xOffset / 2;
                     j++;
                 }
+
+                int damage = commanderDamages.get(player);
+                int color = game.getLifeCounters().get(player).getColor();
 
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(xOffset, yOffset);
 
@@ -232,8 +236,10 @@ public class GameActivity extends AppCompatActivity {
                 commanderCounter.setLayoutParams(params);
                 commanderCounter.setName(name);
                 commanderCounter.setDamage(damage);
+                commanderCounter.setBackgroundColor(color);
 
                 // Adds the view to the commander_layout
+                game.getCommanderCounters().put(player, commanderCounter);
                 commander_layout.addView(commanderCounter);
                 x += xOffset;
                 c++;
