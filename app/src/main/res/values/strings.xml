@@ -21,6 +21,7 @@
     <string name="commander_layout_bOk">OK</string>
     <string name="main_icon_todo">TODO</string>
     <string name="starting_life">20</string>
-    <string name="setup_game_player_names">Player Names</string>
-    <string name="names_max_5_characters_recomended">(Max 5 Characters Recomended)</string>
+    <string name="setup_game_player_names">Display Invokers</string>
+    <string name="names_max_5_characters_recomended">(Max 5 Characters Recommended)</string>
+    <string name="setup_game_minimun_2_players">(Minimum 2 players)</string>
 </resources>

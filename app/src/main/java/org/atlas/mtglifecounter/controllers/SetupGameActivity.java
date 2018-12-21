@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import org.atlas.mtglifecounter.R;
 import org.atlas.mtglifecounter.game.Game;
@@ -24,6 +25,7 @@ public class SetupGameActivity extends AppCompatActivity {
 
     private Game game = Game.getInstance();
     private EditText starting_life_entry;
+    private TextView commander_switch_message;
     private Switch commander_switch;
     private Switch vanguard_switch;
     private Switch display_players_name_switch;
@@ -34,12 +36,16 @@ public class SetupGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setup_game);
 
         starting_life_entry = findViewById(R.id.starting_life_entry);
+        commander_switch_message = findViewById(R.id.commander_switch_message);
         commander_switch = findViewById(R.id.commander_switch);
         vanguard_switch = findViewById(R.id.vanguard_switch);
         display_players_name_switch = findViewById(R.id.display_players_name_switch);
 
         // Disables commander switch if only one Player
-        if (game.getPlayers().size() == 1) commander_switch.setEnabled(false);
+        if (game.getPlayers().size() == 1) {
+            commander_switch_message.setVisibility(View.VISIBLE);
+            commander_switch.setEnabled(false);
+        }
     }
 
     public void pressed_play(View view) {
