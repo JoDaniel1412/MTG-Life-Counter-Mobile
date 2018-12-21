@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#F5F2F3</color>
+    <color name="colorSecondary">#282a2a</color>
+    <color name="colorDetails">#548687</color>
 
-    <color name="colorWhiteText">#F7F7F2</color>
-    <color name="colorAlphaWhite">#64fdfffc</color>
-    <color name="colorMaastrichtBlue">#011627</color>
-    <color name="colorMaximumBlueGreen">#2EC4B6</color>
-    <color name="colorRoseMadder">#E71D36</color>
-    <color name="colorBrightYellow">#FF9F1C</color>
+    <color name="whiteText">#F7F7F2</color>
+    <color name="alphaWhite">#64fdfffc</color>
+    <color name="maastrichtBlue">#011627</color>
+    <color name="maximumBlueGreen">#2EC4B6</color>
+    <color name="roseMadder">#E71D36</color>
+    <color name="brightYellow">#FF9F1C</color>
     <color name="colorIndigo">#540D6E</color>
-    <color name="colorMaximumRed">#DE1A1A</color>
-    <color name="colorPaleAqua">#BBDEF0</color>
-    <color name="colorDarkPurple">#321325</color>
-    <color name="colorHeidelbergRed">#9A031E</color>
-    <color name="colorAsparagus">#87B37A</color>
-    <color name="colorCharlestonGreen">#2F2D2E</color>
-    <color name="colorWineDregs">#603140</color>
-    <color name="colorBrownSugar">#B87D4B</color>
-    <color name="colorCoquelicot">#E53D00</color>
-    <color name="colorMetallicSeaWeed">#1F7A8C</color>
-    <color name="colorJuneBud">#C5D86D</color>
-    <color name="colorGreen">#139A43</color>
+    <color name="maximumRed">#DE1A1A</color>
+    <color name="paleAqua">#BBDEF0</color>
+    <color name="darkPurple">#321325</color>
+    <color name="heidelbergRed">#9A031E</color>
+    <color name="asparagus">#87B37A</color>
+    <color name="charlestonGreen">#2F2D2E</color>
+    <color name="wineDregs">#603140</color>
+    <color name="brownSugar">#B87D4B</color>
+    <color name="coquelicot">#E53D00</color>
+    <color name="metallicSeaWeed">#1F7A8C</color>
+    <color name="juneBud">#C5D86D</color>
+    <color name="green">#139A43</color>
+
+    <color name="rajah">#FCAA67</color>
+    <color name="paleCarmine">#B0413E</color>
+    <color name="winterGreenDream">#548687</color>
 </resources>

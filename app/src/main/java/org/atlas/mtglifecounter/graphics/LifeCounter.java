@@ -95,7 +95,7 @@ public class LifeCounter extends View {
     }
 
     private void loadPaints() {
-        int color = ContextCompat.getColor(this.getContext(), R.color.colorWhiteText);
+        int color = ContextCompat.getColor(this.getContext(), R.color.whiteText);
         lifeTextPaint.setTextSize(this.getWidth() / 3);
         lifeTextPaint.setColor(color);
 
