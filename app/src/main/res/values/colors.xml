@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F5F2F3</color>
+    <color name="colorPrimary">#f5f2f3</color>
     <color name="colorSecondary">#282a2a</color>
+    <color name="colorText">#131515</color>
     <color name="colorDetails">#548687</color>
 
     <color name="whiteText">#F7F7F2</color>
@@ -27,4 +28,5 @@
     <color name="rajah">#FCAA67</color>
     <color name="paleCarmine">#B0413E</color>
     <color name="winterGreenDream">#548687</color>
+    <color name="text_color_primary">@color/colorText</color>
 </resources>

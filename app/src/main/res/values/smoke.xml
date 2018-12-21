@@ -3,11 +3,11 @@
     
     <style name="SmokeLight" parent="Theme.AppCompat.Light.NoActionBar">
 
+        <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
-        <item name="android:colorPrimary">@color/colorPrimary</item>
-        <item name="android:colorPrimaryDark">@color/colorSecondary</item>
-        <item name="android:colorAccent">@color/colorDetails</item>
-        <item name="android:colorForeground">@color/colorSecondary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorSecondary</item>
+        <item name="colorAccent">@color/colorDetails</item>
 
     </style>
 
