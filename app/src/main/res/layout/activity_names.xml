@@ -33,7 +33,8 @@
         app:layout_constraintBottom_toTopOf="@+id/textView10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/TextView.Bold"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/names_layout"

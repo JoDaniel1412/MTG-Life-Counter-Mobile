@@ -108,7 +108,8 @@
         app:layout_constraintBottom_toTopOf="@+id/p2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/TextView.Bold"/>
 
     <Button
         android:id="@+id/button2"
