@@ -24,5 +24,5 @@
     <string name="setup_game_player_names">Display Invokers</string>
     <string name="names_max_5_characters_recomended">(Max 5 Characters Recommended)</string>
     <string name="setup_game_minimun_2_players">(Minimum 2 players)</string>
-    <string name="dev_info">Contact me at: atlas.dev@gmail.com</string>
+    <string name="dev_info">Contact me at: atlas.dev.public@gmail.com</string>
 </resources>
