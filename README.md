@@ -4,7 +4,7 @@ The app focuses in the card game Magic the Gathering and has features related to
 Featuring a simple way to keep Commander's damage and poison counters for up to six players.
 Based on the support received by the application, it will continue polishing according to the requests of the users.
 
-[Go to the play store](https://www.google.com "Google's Homepage")(https://play.google.com/store/apps/details?id=org.atlas.mtglifecounter "Google Play Store")
+[Go to the play store](https://www.google.com "Google's Homepage")(https://play.google.com/store/apps/details?id=org.atlas.mtglifecounter)
 
 <img align="left" width="360" height="720" src="https://user-images.githubusercontent.com/38967981/55663445-2ca55d80-57db-11e9-829b-2583532e811a.png">
 
