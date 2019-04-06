@@ -8,4 +8,5 @@ Based on the support received by the application, it will continue polishing acc
 
 <img align="right" width="360" height="720" src="https://user-images.githubusercontent.com/38967981/55663445-2ca55d80-57db-11e9-829b-2583532e811a.png">
 
+<br/>
 <img align="left" width="360" height="720" src="https://user-images.githubusercontent.com/38967981/55663448-2f07b780-57db-11e9-983c-f0a203e910a4.png">
