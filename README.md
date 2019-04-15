@@ -7,6 +7,6 @@ Based on the support received by the application, it will continue polishing acc
 [Go to the play store](https://play.google.com/store/apps/details?id=org.atlas.mtglifecounter "Play Store")
 
 
-Main Menu                  |  Game Menu
+Game Menu                  |  Playes
 :-------------------------:|:-------------------------:
 ![](https://user-images.githubusercontent.com/38967981/55663445-2ca55d80-57db-11e9-829b-2583532e811a.png)  |  ![](https://user-images.githubusercontent.com/38967981/55663448-2f07b780-57db-11e9-983c-f0a203e910a4.png)
